@@ -4,10 +4,21 @@ exports[`matches snapshot 1`] = `
 <div
   className="container"
 >
-  <textarea
-    className="textEditor"
-    onChange={[Function]}
-    value="console.log('Hello World');"
-  />
+  <div
+    className="content"
+  >
+    <LineNumbers
+      textArea={
+        Object {
+          "current": null,
+        }
+      }
+    />
+    <textarea
+      className="textEditor"
+      onChange={[Function]}
+      value="console.log('Hello World');"
+    />
+  </div>
 </div>
 `;

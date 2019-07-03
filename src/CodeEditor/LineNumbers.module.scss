@@ -1,0 +1,9 @@
+@import './code-editor-variables.scss';
+
+.lineNumbers {
+  position: absolute;
+  left: -16px;
+  display: flex;
+  flex-direction: column;
+  line-height: $line-height;
+}

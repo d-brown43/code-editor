@@ -6,7 +6,7 @@ type FocusType = {
     intermediateCopy: string | undefined;
 }
 
-export default (textArea: RefObject<HTMLTextAreaElement>) => {
+export default (textArea: RefObject<HTMLTextAreaElement | HTMLInputElement>) => {
     const reducer = (state: FocusType, action: { type: string, payload?: any }) => {
         switch (action.type) {
             case 'value':

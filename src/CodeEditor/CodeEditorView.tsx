@@ -1,6 +1,7 @@
 import * as React from "react";
 import styles from './CodeEditor.module.scss';
 import useTextAreaFocus from './useFocus';
+import LineNumbers from "./LineNumbers";
 
 type CodeEditorView = {
     program: string;
@@ -14,12 +15,15 @@ export default React.memo(({program, setProgram}: CodeEditorView) => {
 
     return (
         <div className={styles.container}>
-            <textarea
-                ref={textArea}
-                className={styles.textEditor}
-                value={program}
-                onChange={(e) => setProgram(e.target.value)}
-            />
+            <div className={styles.content}>
+                <LineNumbers textArea={textArea} />
+                <textarea
+                    ref={textArea}
+                    className={styles.textEditor}
+                    value={program}
+                    onChange={(e) => setProgram(e.target.value)}
+                />
+            </div>
         </div>
     )
 });
