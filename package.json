@@ -11,6 +11,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
+    "reset-css": "^4.0.1",
+    "typeface-inconsolata": "0.0.72",
     "typescript": "^3.5.2"
   },
   "scripts": {
@@ -33,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "node-sass": "^4.12.0"
   }
 }

@@ -1,10 +1,11 @@
 import * as React from 'react';
-import './App.scss';
+import CodeEditor from './CodeEditor';
+import styles from './App.module.scss';
 
 function App() {
     return (
-        <div>
-            Hello World
+        <div className={styles.container}>
+            <CodeEditor />
         </div>
     );
 }
