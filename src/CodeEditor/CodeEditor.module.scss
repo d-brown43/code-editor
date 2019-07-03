@@ -1,8 +1,26 @@
 @import '../variables.scss';
 
+.textEditor {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none;
+}
+
+.textEditor,
 .container {
-  padding: 40px;
+  flex: 1;
   background-color: $background-colour;
   color: $foreground-colour;
-  flex: 1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
 }

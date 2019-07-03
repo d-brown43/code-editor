@@ -1,42 +1,52 @@
 {
-  "name": "code-editor",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@babel/parser": "^7.4.5",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.0.12",
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.4",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "reset-css": "^4.0.1",
-    "typeface-inconsolata": "0.0.72",
-    "typescript": "^3.5.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "node-sass": "^4.12.0"
-  }
+    "name": "code-editor",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@babel/parser": "^7.4.5",
+        "@types/jest": "^24.0.15",
+        "@types/node": "^12.0.12",
+        "@types/react": "^16.8.23",
+        "@types/react-dom": "^16.8.4",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-scripts": "3.0.1",
+        "reset-css": "^4.0.1",
+        "typeface-inconsolata": "0.0.72",
+        "typescript": "^3.5.2"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/enzyme": "^3.10.1",
+        "@types/enzyme-adapter-react-16": "^1.0.5",
+        "enzyme": "^3.10.0",
+        "enzyme-adapter-react-16": "^1.14.0",
+        "enzyme-to-json": "^3.3.5",
+        "node-sass": "^4.12.0"
+    },
+    "jest": {
+        "snapshotSerializers": [
+            "enzyme-to-json/serializer"
+        ]
+    }
 }

@@ -4,7 +4,7 @@ import styles from './CodeEditor.module.scss';
 export default () => {
     return (
         <div className={styles.container}>
-            Hello World
+            <textarea className={styles.textEditor} />
         </div>
     )
 };
