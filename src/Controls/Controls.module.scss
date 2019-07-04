@@ -1,0 +1,8 @@
+@import '../variables.scss';
+
+.container {
+  background-color: $background-colour;
+  padding: 8px 24px;
+  display: flex;
+  flex-direction: row;
+}
