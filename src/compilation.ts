@@ -11,7 +11,7 @@ export const compile = (program: string) => {
     });
 };
 
-type GlobalReplacements = {
+type GlobalReplacements = undefined | {
     [key: string]: any;
 }
 
@@ -19,7 +19,7 @@ const computeWindowPropertyName = (property: string) => {
     return `__codeEditor__${property}`;
 };
 
-const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements) => {
+const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) => {
     const visitor = {
         Identifier: (path: NodePath<Identifier>) => {
             if (
@@ -36,7 +36,7 @@ const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements) => {
 };
 
 const addPropsToWindow = (globalReplacements: GlobalReplacements) => {
-    Object.entries(globalReplacements).forEach(([key, value]) => {
+    Object.entries(globalReplacements || {}).forEach(([key, value]) => {
         if (!(key in window)) {
             throw new Error(`key: ${key} is not a valid window property`);
         }
@@ -44,7 +44,13 @@ const addPropsToWindow = (globalReplacements: GlobalReplacements) => {
     });
 };
 
-export const run = (program: string, globalReplacements: GlobalReplacements) => {
+const cleanupWindowProps = (noopedWindowProps: GlobalReplacements) => {
+    Object.keys(noopedWindowProps || {}).forEach((key) => {
+        delete (window as any)[computeWindowPropertyName(key)];
+    });
+};
+
+export const run = (program: string, globalReplacements?: GlobalReplacements) => {
     const ast = parse(program);
 
     const astReplaced = replaceGlobal(ast, globalReplacements);
@@ -53,4 +59,6 @@ export const run = (program: string, globalReplacements: GlobalReplacements) => 
     addPropsToWindow(globalReplacements);
     // eslint-disable-next-line no-eval
     eval(finalProgram);
+
+    cleanupWindowProps(globalReplacements);
 };

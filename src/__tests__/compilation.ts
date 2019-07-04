@@ -13,8 +13,8 @@ describe('run', () => {
     describe('replacing globals', () => {
         it('can run', () => {
             const program = `
-            console.log('Hello World');
-        `;
+                console.log('Hello World');
+            `;
 
             const replacements = {
                 console: {
@@ -54,5 +54,18 @@ describe('run', () => {
             expect(replacements.console.warn).toHaveBeenCalledWith('Hello World');
             expect(replacements.console.error).toHaveBeenCalledWith('Hello World');
         });
+    });
+});
+
+describe('cleanup', () => {
+    it(`doesn't leave extra properties in window after running`, () => {
+        jest.spyOn(console, 'log').mockImplementationOnce(jest.fn());
+
+        const program = `
+            console.log('Hello World');
+        `;
+        const beforeLength = Object.keys(window).length;
+        run(program);
+        expect(Object.keys(window).length).toEqual(beforeLength);
     });
 });
