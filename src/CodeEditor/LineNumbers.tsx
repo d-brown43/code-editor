@@ -1,18 +1,10 @@
 import {RefObject} from "react";
 import * as React from "react";
 import styles from './LineNumbers.module.scss';
+import {generateRange} from "../helpers";
 
 type LineNumbers = {
     textArea: RefObject<HTMLTextAreaElement>;
-};
-
-const generateRange = (highEnd: number) => {
-    let arr = [],
-        c = highEnd + 1;
-    while (c--) {
-        arr[c] = highEnd--
-    }
-    return arr;
 };
 
 const LineNumbers = ({textArea}: LineNumbers) => {

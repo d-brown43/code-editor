@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshots 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="line"
+    key="0"
+  >
+    Hello World
+  </div>
+  <div
+    className="line"
+    key="1"
+  />
+  <div
+    className="line"
+    key="2"
+  />
+  <div
+    className="line"
+    key="3"
+  />
+  <div
+    className="line"
+    key="4"
+  />
+</div>
+`;
