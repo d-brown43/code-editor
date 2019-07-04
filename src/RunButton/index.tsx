@@ -11,7 +11,7 @@ const RunButton = ({run}: RunButton) => {
             className='btn btn-outline-light'
             onClick={run}
         >
-            Compile and Run
+            Run
         </button>
     )
 };

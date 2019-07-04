@@ -3,6 +3,9 @@ import CodeEditor from './CodeEditor';
 import styles from './App.module.scss';
 import defaultProgram from "./defaultProgram";
 import Controls from "./Controls";
+import {run} from "./compilation";
+import getProgramReplacements from './getProgramReplacements';
+import ConsoleLog from './ConsoleLog';
 
 type Programs = {
     [key: string]: string;
@@ -13,18 +16,22 @@ const App = () => {
         index: defaultProgram()
     });
 
-    const compile = () => {
+    const [logs, setLogs] = React.useState<string[]>([]);
 
+    const logMessage = (message: string) => {
+        setLogs((prevLogs) => [
+            ...prevLogs,
+            message
+        ]);
     };
 
-    const run = () => {
-
+    const console = {
+        log: logMessage,
+        warn: logMessage,
+        error: logMessage
     };
 
-    const compileAndRun = () => {
-        compile();
-        run();
-    };
+    const programReplacements = React.useMemo(() => getProgramReplacements(console), [console]);
 
     const setProgramGenerator = (key: string) => (program: string) => {
         setPrograms((prevPrograms) => ({
@@ -35,7 +42,11 @@ const App = () => {
 
     return (
         <div className={styles.container}>
-            <Controls run={compileAndRun} />
+            <Controls
+                run={() => {
+                    run(programs.index, programReplacements);
+                }}
+            />
             {
                 Object.entries(programs).map(([filename, program]) => (
                     <CodeEditor
@@ -45,6 +56,7 @@ const App = () => {
                     />
                 ))
             }
+            <ConsoleLog logMessages={logs} />
         </div>
     );
 };

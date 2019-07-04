@@ -14,7 +14,7 @@ describe('functionality', () => {
     it('calls run on click', () => {
         const run = jest.fn();
         const {getByText} = render(<RunButton run={run} />);
-        const button = getByText('Compile and Run');
+        const button = getByText('Run');
         fireEvent.click(button);
         expect(run).toHaveBeenCalled();
     });

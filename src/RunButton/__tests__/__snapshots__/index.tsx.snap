@@ -6,6 +6,6 @@ exports[`matches snapshot 1`] = `
   onClick={[MockFunction]}
   type="button"
 >
-  Compile and Run
+  Run
 </button>
 `;
