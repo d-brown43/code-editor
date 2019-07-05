@@ -11,7 +11,7 @@ exports[`matches snapshots 1`] = `
       className="line"
       key="0"
     >
-      <ConsoleMessage
+      <Memo()
         message="Hello World"
       />
     </div>
@@ -19,7 +19,7 @@ exports[`matches snapshots 1`] = `
       className="line"
       key="2"
     >
-      <ConsoleMessage
+      <Memo()
         message=""
       />
     </div>
@@ -27,7 +27,7 @@ exports[`matches snapshots 1`] = `
       className="line"
       key="3"
     >
-      <ConsoleMessage
+      <Memo()
         message=""
       />
     </div>
@@ -35,7 +35,7 @@ exports[`matches snapshots 1`] = `
       className="line"
       key="4"
     >
-      <ConsoleMessage
+      <Memo()
         message=""
       />
     </div>

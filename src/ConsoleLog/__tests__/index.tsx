@@ -22,7 +22,7 @@ describe('behaviour', () => {
                 ]}
             />
         );
-        expect(() => getByText('Hello World')).not.toThrow();
-        expect(() => getByText('Hello 2')).not.toThrow();
+        expect(() => getByText(/Hello World/)).not.toThrow();
+        expect(() => getByText(/Hello 2/)).not.toThrow();
     });
 });

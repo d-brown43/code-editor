@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<pre
+  className="formattedMessage"
+>
+  "Hello World"
+</pre>
+`;
+
+exports[`matches snapshot 2`] = `
+<pre
+  className="formattedMessage"
+>
+  {
+  "a": 1,
+  "b": 2
+}
+</pre>
+`;
+
+exports[`matches snapshot 3`] = `
+<pre
+  className="formattedMessage"
+>
+  [
+  1,
+  2,
+  3
+]
+</pre>
+`;
+
+exports[`matches snapshot 4`] = `
+<pre
+  className="formattedMessage"
+/>
+`;
+
+exports[`matches snapshot 5`] = `
+<pre
+  className="formattedMessage"
+>
+  null
+</pre>
+`;
