@@ -9,6 +9,7 @@ $line-height: 1.4em;
 
 .line {
   min-height: $line-height;
+  height: 1.5em;
 }
 
 .line:not(:last-of-type) {

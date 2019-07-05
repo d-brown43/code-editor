@@ -1,20 +1,34 @@
 import * as React from "react";
 import styles from './ConsoleLog.module.scss';
-import {generateRange} from "../helpers";
 import ConsoleMessage from "./ConsoleMessage";
+import ReactResizeDetector from 'react-resize-detector';
 
 type ConsoleLog = {
     logMessages: any[];
 };
 
 const ConsoleLog = ({logMessages}: ConsoleLog) => {
-    if (logMessages.length < 5) {
-        logMessages = logMessages.concat(generateRange(4 - logMessages.length).map(() => ''));
-    }
+    const [height, setHeight] = React.useState(0);
+    const wrapper = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (wrapper.current !== null) {
+            wrapper.current.scrollTop = height - wrapper.current.offsetHeight;
+        }
+    }, [height]);
 
     return (
-        <div className={styles.wrapper}>
+        <div
+            className={styles.wrapper}
+            ref={wrapper}
+        >
             <div className={styles.container}>
+                <ReactResizeDetector
+                    handleHeight
+                    onResize={(width, height) => {
+                        setHeight(height);
+                    }}
+                />
                 {logMessages.map((message, index) => (
                     <div
                         key={index}

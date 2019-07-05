@@ -7,36 +7,22 @@ exports[`matches snapshots 1`] = `
   <div
     className="container"
   >
+    <ResizeDetector
+      handleHeight={true}
+      handleWidth={false}
+      nodeType="div"
+      onResize={[Function]}
+      querySelector={null}
+      refreshRate={1000}
+      skipOnMount={false}
+      targetDomEl={null}
+    />
     <div
       className="line"
       key="0"
     >
       <ConsoleMessage
         message="Hello World"
-      />
-    </div>
-    <div
-      className="line"
-      key="2"
-    >
-      <ConsoleMessage
-        message=""
-      />
-    </div>
-    <div
-      className="line"
-      key="3"
-    >
-      <ConsoleMessage
-        message=""
-      />
-    </div>
-    <div
-      className="line"
-      key="4"
-    >
-      <ConsoleMessage
-        message=""
       />
     </div>
   </div>
