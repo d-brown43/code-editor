@@ -18,9 +18,26 @@ $line-height: 1.4em;
 
 .formattedMessage {
   margin: 0;
+  display: block;
+  width: 100%;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .wrapper {
   height: 10 * $line-height;
   overflow-y: auto;
+}
+
+.log {
+
+}
+
+.warn {
+  background-color: yellow;
+}
+
+.error {
+  background-color: #ff7878;
+  width: 100%;
 }

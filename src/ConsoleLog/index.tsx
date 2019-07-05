@@ -4,7 +4,7 @@ import ConsoleMessage from "./ConsoleMessage";
 import ReactResizeDetector from 'react-resize-detector';
 
 type ConsoleLog = {
-    logMessages: any[];
+    logMessages: ConsoleMessage[];
 };
 
 const ConsoleLog = ({logMessages}: ConsoleLog) => {
@@ -29,12 +29,13 @@ const ConsoleLog = ({logMessages}: ConsoleLog) => {
                         setHeight(height);
                     }}
                 />
-                {logMessages.map((message, index) => (
+                {logMessages.map(({message, type}, index) => (
                     <div
                         key={index}
                         className={styles.line}
                     >
                         <ConsoleMessage
+                            type={type}
                             message={message}
                         />
                     </div>

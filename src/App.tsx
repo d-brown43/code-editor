@@ -16,22 +16,25 @@ const App = () => {
         index: defaultProgram()
     });
 
-    const [logs, setLogs] = React.useState<string[]>([]);
+    const [logs, setLogs] = React.useState<ConsoleMessage[]>([]);
 
-    const logMessage = (message: string) => {
+    const logMessage = (type: ConsoleMessageType) => (message: string) => {
         setLogs((prevLogs) => [
             ...prevLogs,
-            message
+            {
+                message,
+                type
+            }
         ]);
     };
 
-    const console = {
-        log: logMessage,
-        warn: logMessage,
-        error: logMessage
+    const consoleReplace = {
+        log: logMessage('log'),
+        warn: logMessage('warn'),
+        error: logMessage('error')
     };
 
-    const programReplacements = React.useMemo(() => getProgramReplacements(console), [console]);
+    const programReplacements = React.useMemo(() => getProgramReplacements(consoleReplace), [consoleReplace]);
 
     React.useEffect(() => {
         prepareWindow(programReplacements);
@@ -48,7 +51,11 @@ const App = () => {
         <div className={styles.container}>
             <Controls
                 run={() => {
-                    run(programs.index, programReplacements);
+                    try {
+                        run(programs.index, programReplacements);
+                    } catch {
+                        // Ignore
+                    }
                 }}
             />
             {

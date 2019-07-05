@@ -23,6 +23,7 @@ exports[`matches snapshots 1`] = `
     >
       <ConsoleMessage
         message="Hello World"
+        type="log"
       />
     </div>
   </div>

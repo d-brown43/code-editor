@@ -5,7 +5,12 @@ import {render, cleanup} from "@testing-library/react";
 
 it('matches snapshots', () => {
     const consoleLog = shallow(
-        <ConsoleLog logMessages={['Hello World']} />
+        <ConsoleLog
+            logMessages={[{
+                message: 'Hello World',
+                type: "log"
+            }]}
+        />
     );
     expect(consoleLog).toMatchSnapshot();
 });
@@ -17,8 +22,14 @@ describe('behaviour', () => {
         const {getByText} = render(
             <ConsoleLog
                 logMessages={[
-                    'Hello World',
-                    'Hello 2'
+                    {
+                        message: 'Hello World',
+                        type: "log",
+                    },
+                    {
+                        message: 'Hello 2',
+                        type: "log",
+                    }
                 ]}
             />
         );

@@ -1,14 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches snapshot 1`] = `
-<span>
+<span
+  className="log formattedMessage"
+>
   Hello World
 </span>
 `;
 
 exports[`matches snapshot 2`] = `
 <pre
-  className="formattedMessage"
+  className="formattedMessage log"
 >
   {
   "a": 1,
@@ -19,7 +21,7 @@ exports[`matches snapshot 2`] = `
 
 exports[`matches snapshot 3`] = `
 <pre
-  className="formattedMessage"
+  className="formattedMessage log"
 >
   [
   1,
@@ -31,13 +33,13 @@ exports[`matches snapshot 3`] = `
 
 exports[`matches snapshot 4`] = `
 <pre
-  className="formattedMessage"
+  className="formattedMessage log"
 />
 `;
 
 exports[`matches snapshot 5`] = `
 <pre
-  className="formattedMessage"
+  className="formattedMessage log"
 >
   null
 </pre>
