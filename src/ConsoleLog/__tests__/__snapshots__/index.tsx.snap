@@ -11,20 +11,34 @@ exports[`matches snapshots 1`] = `
       className="line"
       key="0"
     >
-      Hello World
+      <ConsoleMessage
+        message="Hello World"
+      />
     </div>
     <div
       className="line"
       key="2"
-    />
+    >
+      <ConsoleMessage
+        message=""
+      />
+    </div>
     <div
       className="line"
       key="3"
-    />
+    >
+      <ConsoleMessage
+        message=""
+      />
+    </div>
     <div
       className="line"
       key="4"
-    />
+    >
+      <ConsoleMessage
+        message=""
+      />
+    </div>
   </div>
 </div>
 `;

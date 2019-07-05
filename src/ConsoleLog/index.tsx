@@ -1,6 +1,7 @@
 import * as React from "react";
 import styles from './ConsoleLog.module.scss';
 import {generateRange} from "../helpers";
+import ConsoleMessage from "./ConsoleMessage";
 
 type ConsoleLog = {
     logMessages: any[];
@@ -19,12 +20,9 @@ const ConsoleLog = ({logMessages}: ConsoleLog) => {
                         key={index}
                         className={styles.line}
                     >
-                        {(() => {
-                            if (typeof message === 'string') {
-                                return message;
-                            }
-                            return <pre className={styles.formattedMessage}>{JSON.stringify(message, null, 2)}</pre>;
-                        })()}
+                        <ConsoleMessage
+                            message={message}
+                        />
                     </div>
                 ))}
             </div>
