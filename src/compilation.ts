@@ -2,30 +2,44 @@ import {parse} from '@babel/parser';
 import traverse, {NodePath} from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
-import {File, Identifier} from '@babel/types';
+import {File, MemberExpression} from '@babel/types';
 
-export const compile = (program: string) => {
-    return parse(program, {
-        sourceType: "unambiguous",
-        // ranges: true
-    });
+const WINDOW_PROPERTY_NAME = '__codeEditor__';
+
+export const prepareWindow = (globalReplacements: GlobalReplacements = {}) => {
+    (window as any)[WINDOW_PROPERTY_NAME] = globalReplacements;
 };
 
 type GlobalReplacements = undefined | {
     [key: string]: any;
 }
 
-const computeWindowPropertyName = (property: string) => {
-    return `__codeEditor__${property}`;
-};
-
 const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) => {
     const visitor = {
-        Identifier: (path: NodePath<Identifier>) => {
+        MemberExpression: (path: NodePath<MemberExpression>) => {
             if (
-                Object.keys(globalReplacements).includes(path.node.name)
+                (path.node.object.type === 'Identifier')
+                && (path.node.object.name === 'window')
+                && (path.node.property.type === 'Identifier')
+                && Object.keys(globalReplacements).includes(path.node.property.name)
             ) {
-                path.replaceWith(t.identifier(computeWindowPropertyName(path.node.name)));
+                path.replaceWith(t.memberExpression(
+                    t.identifier(WINDOW_PROPERTY_NAME),
+                    t.identifier(path.node.property.name)
+                ));
+            } else if (
+                (path.node.object.type === 'Identifier')
+                && Object.keys(globalReplacements).includes(path.node.object.name)
+                && (path.parent.type === 'CallExpression')
+            ) {
+                // Replace something like console with [WINDOW_PROPERTY_NAME].console
+                path.replaceWith(t.memberExpression(
+                    t.memberExpression(
+                        t.identifier(WINDOW_PROPERTY_NAME),
+                        t.identifier(path.node.object.name)
+                    ),
+                    t.identifier(path.node.property.name)
+                ));
             }
         }
     };
@@ -35,30 +49,12 @@ const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) =
     return ast;
 };
 
-const addPropsToWindow = (globalReplacements: GlobalReplacements) => {
-    Object.entries(globalReplacements || {}).forEach(([key, value]) => {
-        if (!(key in window)) {
-            throw new Error(`key: ${key} is not a valid window property`);
-        }
-        (window as any)[computeWindowPropertyName(key)] = value;
-    });
-};
-
-const cleanupWindowProps = (noopedWindowProps: GlobalReplacements) => {
-    Object.keys(noopedWindowProps || {}).forEach((key) => {
-        delete (window as any)[computeWindowPropertyName(key)];
-    });
-};
-
 export const run = (program: string, globalReplacements?: GlobalReplacements) => {
     const ast = parse(program);
 
     const astReplaced = replaceGlobal(ast, globalReplacements);
     const finalProgram = generate(astReplaced).code;
 
-    addPropsToWindow(globalReplacements);
     // eslint-disable-next-line no-eval
     eval(finalProgram);
-
-    cleanupWindowProps(globalReplacements);
 };

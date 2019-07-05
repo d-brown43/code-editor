@@ -3,7 +3,7 @@ import CodeEditor from './CodeEditor';
 import styles from './App.module.scss';
 import defaultProgram from "./defaultProgram";
 import Controls from "./Controls";
-import {run} from "./compilation";
+import {prepareWindow, run} from "./compilation";
 import getProgramReplacements from './getProgramReplacements';
 import ConsoleLog from './ConsoleLog';
 
@@ -32,6 +32,10 @@ const App = () => {
     };
 
     const programReplacements = React.useMemo(() => getProgramReplacements(console), [console]);
+
+    React.useEffect(() => {
+        prepareWindow(programReplacements);
+    }, [programReplacements]);
 
     const setProgramGenerator = (key: string) => (program: string) => {
         setPrograms((prevPrograms) => ({

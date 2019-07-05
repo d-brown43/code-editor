@@ -1,13 +1,4 @@
-import {compile, run} from "../compilation";
-
-describe('compile', () => {
-    it('can compile a simple program', () => {
-        const program = `
-            console.log('Hello World');
-        `;
-        compile(program);
-    });
-});
+import {prepareWindow, run} from "../compilation";
 
 describe('run', () => {
     describe('replacing globals', () => {
@@ -22,6 +13,7 @@ describe('run', () => {
                 }
             };
 
+            prepareWindow(replacements);
             run(program, replacements);
             expect(replacements.console.log).toHaveBeenCalled();
         });
@@ -45,6 +37,7 @@ describe('run', () => {
                 }
             };
 
+            prepareWindow(replacements);
             run(program, replacements);
             expect(consoleLog).not.toHaveBeenCalled();
             expect(consoleWarn).not.toHaveBeenCalled();
@@ -54,18 +47,22 @@ describe('run', () => {
             expect(replacements.console.warn).toHaveBeenCalledWith('Hello World');
             expect(replacements.console.error).toHaveBeenCalledWith('Hello World');
         });
-    });
-});
 
-describe('cleanup', () => {
-    it(`doesn't leave extra properties in window after running`, () => {
-        jest.spyOn(console, 'log').mockImplementationOnce(jest.fn());
+        it('works for explicit global statements', () => {
+            const replacements = {
+                console: {
+                    log: jest.fn()
+                }
+            };
 
-        const program = `
-            console.log('Hello World');
-        `;
-        const beforeLength = Object.keys(window).length;
-        run(program);
-        expect(Object.keys(window).length).toEqual(beforeLength);
+            const program = `
+                window.console.log('Hi');
+            `;
+
+            prepareWindow(replacements);
+            run(program, replacements);
+
+            expect(replacements.console.log).toHaveBeenCalledWith('Hi');
+        });
     });
 });
