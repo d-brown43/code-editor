@@ -64,5 +64,22 @@ describe('run', () => {
 
             expect(replacements.console.log).toHaveBeenCalledWith('Hi');
         });
+
+        it('works for global too, not just window', () => {
+            const program = `
+                global.console.log('Hi');
+            `;
+
+            const replacements = {
+                console: {
+                    log: jest.fn()
+                }
+            };
+
+            prepareWindow(replacements);
+            run(program, replacements);
+
+            expect(replacements.console.log).toHaveBeenCalledWith('Hi');
+        });
     });
 });

@@ -1,8 +1,10 @@
 import {parse} from '@babel/parser';
 import traverse, {NodePath} from '@babel/traverse';
 import generate from '@babel/generator';
+import * as babel from '@babel/core';
 import * as t from '@babel/types';
 import {File, MemberExpression} from '@babel/types';
+import babelPresetEnv from '@babel/preset-env';
 
 const WINDOW_PROPERTY_NAME = '__codeEditor__';
 
@@ -19,7 +21,7 @@ const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) =
         MemberExpression: (path: NodePath<MemberExpression>) => {
             if (
                 (path.node.object.type === 'Identifier')
-                && (path.node.object.name === 'window')
+                && ['window', 'global'].includes(path.node.object.name)
                 && (path.node.property.type === 'Identifier')
                 && Object.keys(globalReplacements).includes(path.node.property.name)
             ) {
@@ -53,8 +55,12 @@ export const run = (program: string, globalReplacements?: GlobalReplacements) =>
     const ast = parse(program);
 
     const astReplaced = replaceGlobal(ast, globalReplacements);
-    const finalProgram = generate(astReplaced).code;
+    const finalProgram = babel.transformSync(generate(astReplaced).code, {
+        presets: [babelPresetEnv]
+    });
 
-    // eslint-disable-next-line no-eval
-    eval(finalProgram);
+    if (finalProgram) {
+        // eslint-disable-next-line no-eval
+        eval(finalProgram.code as string);
+    }
 };
