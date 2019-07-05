@@ -2,29 +2,29 @@
 
 exports[`matches snapshots 1`] = `
 <div
-  className="container"
+  className="wrapper"
 >
   <div
-    className="line"
-    key="0"
+    className="container"
   >
-    Hello World
+    <div
+      className="line"
+      key="0"
+    >
+      Hello World
+    </div>
+    <div
+      className="line"
+      key="2"
+    />
+    <div
+      className="line"
+      key="3"
+    />
+    <div
+      className="line"
+      key="4"
+    />
   </div>
-  <div
-    className="line"
-    key="1"
-  />
-  <div
-    className="line"
-    key="2"
-  />
-  <div
-    className="line"
-    key="3"
-  />
-  <div
-    className="line"
-    key="4"
-  />
 </div>
 `;

@@ -8,11 +8,7 @@ exports[`matches snapshot 1`] = `
     className="content"
   >
     <LineNumbers
-      textArea={
-        Object {
-          "current": null,
-        }
-      }
+      program="console.log('Hello World');"
     />
     <textarea
       className="textEditor"

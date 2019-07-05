@@ -2,8 +2,9 @@
 
 .lineNumbers {
   position: absolute;
-  left: -16px;
+  margin-left: -16px;
   display: flex;
   flex-direction: column;
   line-height: $line-height;
+  letter-spacing: normal;
 }

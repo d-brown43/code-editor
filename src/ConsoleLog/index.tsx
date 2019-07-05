@@ -3,7 +3,7 @@ import styles from './ConsoleLog.module.scss';
 import {generateRange} from "../helpers";
 
 type ConsoleLog = {
-    logMessages: string[];
+    logMessages: any[];
 };
 
 const ConsoleLog = ({logMessages}: ConsoleLog) => {
@@ -12,15 +12,22 @@ const ConsoleLog = ({logMessages}: ConsoleLog) => {
     }
 
     return (
-        <div className={styles.container}>
-            {logMessages.map((message, index) => (
-                <div
-                    key={index}
-                    className={styles.line}
-                >
-                    {message}
-                </div>
-            ))}
+        <div className={styles.wrapper}>
+            <div className={styles.container}>
+                {logMessages.map((message, index) => (
+                    <div
+                        key={index}
+                        className={styles.line}
+                    >
+                        {(() => {
+                            if (typeof message === 'string') {
+                                return message;
+                            }
+                            return <pre className={styles.formattedMessage}>{JSON.stringify(message, null, 2)}</pre>;
+                        })()}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

@@ -3,16 +3,23 @@ $line-height: 1.4em;
 .container {
   display: flex;
   flex-direction: column;
-  height: 5 * $line-height;
-  overflow-y: auto;
   padding-left: 40px;
   padding-right: 40px;
 }
 
 .line {
-  height: $line-height;
+  min-height: $line-height;
 }
 
 .line:not(:last-of-type) {
   border-bottom: 1px solid #eee;
+}
+
+.formattedMessage {
+  margin: 0;
+}
+
+.wrapper {
+  height: 10 * $line-height;
+  overflow-y: auto;
 }

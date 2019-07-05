@@ -1,21 +1,17 @@
-import {RefObject} from "react";
 import * as React from "react";
 import styles from './LineNumbers.module.scss';
 import {generateRange} from "../helpers";
 
 type LineNumbers = {
-    textArea: RefObject<HTMLTextAreaElement>;
+    program: string;
 };
 
-const LineNumbers = ({textArea}: LineNumbers) => {
-    let lineCount = 0;
-    if (textArea.current !== null) {
-        lineCount = textArea.current.value.split('\n').length - 1;
-    }
+const LineNumbers = ({program}: LineNumbers) => {
+    const lineCount = program.split('\n').length;
 
     return (
         <div className={styles.lineNumbers}>
-            {generateRange(lineCount).map((index) => {
+            {generateRange(lineCount, 1).map((index) => {
                 return (
                     <span key={index}>{index}</span>
                 )

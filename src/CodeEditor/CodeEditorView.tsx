@@ -16,7 +16,7 @@ export default React.memo(({program, setProgram}: CodeEditorView) => {
     return (
         <div className={styles.container}>
             <div className={styles.content}>
-                <LineNumbers textArea={textArea} />
+                <LineNumbers program={program} />
                 <textarea
                     ref={textArea}
                     className={styles.textEditor}
