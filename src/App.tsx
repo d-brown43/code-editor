@@ -23,9 +23,11 @@ const App = () => {
         index: defaultProgram()
     });
     const [programErrors, setProgramErrors] = React.useState<ProgramErrors>({});
-    const programReplacements = useGlobalReplacements(addLogMessage);
+    const {globalReplacements, cleanup} = useGlobalReplacements(addLogMessage);
 
-    React.useEffect(() => prepareWindow(programReplacements), [programReplacements]);
+    React.useEffect(() => {
+        prepareWindow(globalReplacements);
+    }, [globalReplacements]);
 
     const setProgramGenerator = (key: string) => (program: string) => {
         setPrograms((prevPrograms) => ({
@@ -46,11 +48,13 @@ const App = () => {
             <Controls
                 run={() => {
                     try {
-                        run(programs.index, programReplacements);
+                        cleanup();
+                        run(programs.index, globalReplacements);
                     } catch (e) {
                         addLogMessage('error')(e.message.replace(/__codeEditor__\./g, ''));
                     }
                 }}
+                stop={cleanup}
             />
             {
                 Object.entries(programs).map(([filename, program]) => (

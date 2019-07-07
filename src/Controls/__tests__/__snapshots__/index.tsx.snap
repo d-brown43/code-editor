@@ -7,5 +7,6 @@ exports[`matches snapshot 1`] = `
   <RunButton
     run={[MockFunction]}
   />
+  <StopButton />
 </div>
 `;

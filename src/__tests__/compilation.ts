@@ -1,4 +1,5 @@
 import {compileForErrors, prepareWindow, run} from "../compilation";
+import {setTimeout as setTimeoutReplace} from '../useGlobalReplacements';
 
 describe('run', () => {
     it('can run', () => {
@@ -98,22 +99,41 @@ describe('compileForErrors', () => {
     });
 });
 
-describe('sandboxing', () => {
-    it(`doesn't let scripts define variables in the global window`, () => {
+describe('rerunning', () => {
+    it('can patch setTimeout (when given) to be cancelled when a new program is run', async () => {
         const program = `
-            window.someNewVariable = 10;
+            setTimeout(() => {
+                console.log('Hello World');
+            });
         `;
-        run(program);
-        // @ts-ignore
-        expect(window.someNewVariable).not.toBeDefined();
-    });
 
-    it('uses the same reference for global and window', () => {
-        const program = `
-            window.someNewVariable = 10;
+        const replacements = {
+            console: {
+                log: jest.fn((arg) => console.log(arg))
+            },
+            setTimeout: jest.fn(() => setTimeoutReplace())
+        };
+
+        prepareWindow(replacements);
+        run(program, replacements);
+
+        expect(replacements.setTimeout).toHaveBeenCalled();
+
+        // @ts-ignore
+        setTimeoutReplace.cancel();
+
+        const newProgram = `
+            window.a = 1;
         `;
-        const {window, global} = run(program);
-        expect(window.someNewVariable).toEqual(10);
-        expect(global.someNewVariable).toEqual(10);
+
+        run(newProgram, replacements);
+
+        await new Promise(async (resolve) => {
+            setTimeout(() => {
+                expect(replacements.console.log).not.toHaveBeenCalled();
+                expect((window as any).a).toEqual(1);
+                resolve();
+            });
+        });
     });
 });

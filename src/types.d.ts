@@ -31,8 +31,3 @@ type ErrorState = {
     y: number;
     error: null | string;
 }
-
-type ProgramOutput = {
-    window: any;
-    global: any
-}

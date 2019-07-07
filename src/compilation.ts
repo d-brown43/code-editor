@@ -3,7 +3,7 @@ import traverse, {NodePath} from '@babel/traverse';
 import generate from '@babel/generator';
 import * as babel from '@babel/core';
 import * as t from '@babel/types';
-import {File, MemberExpression} from '@babel/types';
+import {CallExpression, File, MemberExpression} from '@babel/types';
 import babelPresetEnv from '@babel/preset-env';
 
 const WINDOW_PROPERTY_NAME = '__codeEditor__';
@@ -39,6 +39,22 @@ const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) =
                     t.identifier(path.node.property.name)
                 ));
             }
+        },
+        CallExpression: (path: NodePath<CallExpression>) => {
+            if (
+                (path.node.callee.type === 'Identifier')
+                && Object.keys(globalReplacements).includes(path.node.callee.name)
+            ) {
+                path.replaceWith(
+                    t.callExpression(
+                        t.memberExpression(
+                            t.identifier(WINDOW_PROPERTY_NAME),
+                            t.identifier(path.node.callee.name)
+                        ),
+                        path.node.arguments
+                    )
+                );
+            }
         }
     };
 
@@ -62,7 +78,7 @@ export const compileForErrors = (program: string): ProgramError => {
     }
 };
 
-export const run = (program: string, globalReplacements?: GlobalReplacements): ProgramOutput => {
+export const run = (program: string, globalReplacements?: GlobalReplacements): void => {
     const ast = parse(program);
 
     const astReplaced = replaceGlobal(ast, globalReplacements);
@@ -71,17 +87,7 @@ export const run = (program: string, globalReplacements?: GlobalReplacements): P
     });
 
     if (finalProgram) {
-        const windowGlobal = {};
-        // eslint-disable-next-line no-new-func
-        const fnProgram = new Function('window', 'global', finalProgram.code as string);
-        fnProgram(windowGlobal, windowGlobal);
-        return {
-            window: windowGlobal,
-            global: windowGlobal
-        };
+        // eslint-disable-next-line no-eval
+        eval(finalProgram.code as string);
     }
-    return {
-        window: null,
-        global: null
-    };
 };

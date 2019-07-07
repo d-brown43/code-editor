@@ -6,6 +6,7 @@ exports[`matches snapshot 1`] = `
 >
   <Controls
     run={[Function]}
+    stop={[Function]}
   />
   <CodeEditor
     key="index"
