@@ -4,8 +4,9 @@ import styles from './App.module.scss';
 import defaultProgram from "./defaultProgram";
 import Controls from "./Controls";
 import {compileForErrors, prepareWindow, run} from "./compilation";
-import getProgramReplacements from './getProgramReplacements';
 import ConsoleLog from './ConsoleLog';
+import useLogs from "./useLogs";
+import useGlobalReplacements from "./useGlobalReplacements";
 
 type Programs = {
     [key: string]: string;
@@ -17,36 +18,14 @@ type ProgramErrors = {
 
 const App = () => {
     const [activeProgram, setActiveProgram] = React.useState<string>('index');
-
+    const [logs, addLogMessage] = useLogs();
     const [programs, setPrograms] = React.useState<Programs>({
         index: defaultProgram()
     });
-
     const [programErrors, setProgramErrors] = React.useState<ProgramErrors>({});
+    const programReplacements = useGlobalReplacements(addLogMessage);
 
-    const [logs, setLogs] = React.useState<ConsoleMessage[]>([]);
-
-    const logMessage = (type: ConsoleMessageType) => (message: string) => {
-        setLogs((prevLogs) => [
-            ...prevLogs,
-            {
-                message,
-                type
-            }
-        ]);
-    };
-
-    const consoleReplace = {
-        log: logMessage('log'),
-        warn: logMessage('warn'),
-        error: logMessage('error')
-    };
-
-    const programReplacements = React.useMemo(() => getProgramReplacements(consoleReplace), [consoleReplace]);
-
-    React.useEffect(() => {
-        prepareWindow(programReplacements);
-    }, [programReplacements]);
+    React.useEffect(() => prepareWindow(programReplacements), [programReplacements]);
 
     const setProgramGenerator = (key: string) => (program: string) => {
         setPrograms((prevPrograms) => ({
@@ -70,7 +49,6 @@ const App = () => {
                         run(programs.index, programReplacements);
                     } catch (e) {
                         console.error(e);
-                        // Ignore
                     }
                 }}
             />

@@ -12,9 +12,7 @@ export const prepareWindow = (globalReplacements: GlobalReplacements = {}) => {
     (window as any)[WINDOW_PROPERTY_NAME] = globalReplacements;
 };
 
-type GlobalReplacements = undefined | {
-    [key: string]: any;
-}
+
 
 const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) => {
     const visitor = {
