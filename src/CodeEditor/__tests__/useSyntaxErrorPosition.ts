@@ -73,6 +73,7 @@ it(`sets position based on given program error location`, () => {
             setError
         );
 
+        // Sum of all characters in the above text (including newlines)
         expect(textareaCaretMock).toHaveBeenCalledWith({}, 26);
         expect(setError).toHaveBeenCalledWith({
             x: 321,
