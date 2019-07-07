@@ -1,8 +1,7 @@
 export const generateRange = (highEnd: number, lowEnd: number = 1) => {
-    let arr = [],
-        c = highEnd + 1;
-    while (c-- > lowEnd) {
-        arr[c] = highEnd--
+    const arr = [];
+    for (let i = lowEnd; i <= highEnd; i++) {
+        arr.push(i);
     }
     return arr;
 };
