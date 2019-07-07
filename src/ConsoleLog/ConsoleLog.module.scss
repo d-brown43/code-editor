@@ -26,6 +26,7 @@ $line-height: 1.4em;
 
 .wrapper {
   height: 10 * $line-height;
+  max-height: 30vh;
   overflow-y: auto;
 }
 

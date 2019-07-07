@@ -8,6 +8,7 @@
         "@babel/preset-env": "^7.5.0",
         "@babel/traverse": "^7.5.0",
         "@babel/types": "^7.5.0",
+        "@fortawesome/fontawesome-free": "^5.9.0",
         "@types/jest": "^24.0.15",
         "@types/node": "^12.0.12",
         "@types/react": "^16.8.23",
@@ -18,6 +19,7 @@
         "react-resize-detector": "^4.2.0",
         "react-scripts": "3.0.1",
         "reset-css": "^4.0.1",
+        "textarea-caret": "^3.1.0",
         "typeface-inconsolata": "0.0.72",
         "typescript": "^3.5.2"
     },
@@ -49,6 +51,7 @@
         "@types/enzyme-adapter-react-16": "^1.0.5",
         "@types/react-resize-detector": "^4.0.1",
         "@types/react-sticky": "^6.0.3",
+        "@types/textarea-caret": "^3.0.0",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
         "enzyme-to-json": "^3.3.5",

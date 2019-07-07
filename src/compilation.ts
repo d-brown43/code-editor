@@ -51,6 +51,21 @@ const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) =
     return ast;
 };
 
+export const compileForErrors = (program: string): ProgramError => {
+    try {
+        parse(program);
+        return false;
+    } catch (e) {
+        return {
+            location: {
+                column: e.loc.column,
+                line: e.loc.line
+            },
+            message: e.message
+        };
+    }
+};
+
 export const run = (program: string, globalReplacements?: GlobalReplacements) => {
     const ast = parse(program);
 

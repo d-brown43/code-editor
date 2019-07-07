@@ -3,7 +3,7 @@ import CodeEditor from './CodeEditor';
 import styles from './App.module.scss';
 import defaultProgram from "./defaultProgram";
 import Controls from "./Controls";
-import {prepareWindow, run} from "./compilation";
+import {compileForErrors, prepareWindow, run} from "./compilation";
 import getProgramReplacements from './getProgramReplacements';
 import ConsoleLog from './ConsoleLog';
 
@@ -11,10 +11,18 @@ type Programs = {
     [key: string]: string;
 }
 
+type ProgramErrors = {
+    [key: string]: ProgramError;
+}
+
 const App = () => {
+    const [activeProgram, setActiveProgram] = React.useState<string>('index');
+
     const [programs, setPrograms] = React.useState<Programs>({
         index: defaultProgram()
     });
+
+    const [programErrors, setProgramErrors] = React.useState<ProgramErrors>({});
 
     const [logs, setLogs] = React.useState<ConsoleMessage[]>([]);
 
@@ -47,13 +55,21 @@ const App = () => {
         }))
     };
 
+    React.useEffect(() => {
+        setProgramErrors(Object.entries(programs).reduce((result, [programKey, program]) => ({
+            ...result,
+            [programKey]: compileForErrors(program)
+        }), {}));
+    }, [programs]);
+
     return (
         <div className={styles.container}>
             <Controls
                 run={() => {
                     try {
                         run(programs.index, programReplacements);
-                    } catch {
+                    } catch (e) {
+                        console.error(e);
                         // Ignore
                     }
                 }}
@@ -64,6 +80,7 @@ const App = () => {
                         key={filename}
                         program={program}
                         setProgram={setProgramGenerator(filename)}
+                        programError={programErrors[activeProgram]}
                     />
                 ))
             }

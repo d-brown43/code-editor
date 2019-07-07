@@ -7,9 +7,7 @@ type ConsoleMock = {
 export default (logger: ConsoleMock) => {
     return {
         console: {
-            log: logger.log,
-            warn: logger.warn,
-            error: logger.error
+            ...logger
         }
     };
 };
