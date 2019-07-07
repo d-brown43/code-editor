@@ -25,3 +25,9 @@ type UseLogReturn = [ConsoleMessage[], LogWithType];
 type GlobalReplacements = undefined | {
     [key: string]: any;
 }
+
+type ErrorState = {
+    x: number;
+    y: number;
+    error: null | string;
+}

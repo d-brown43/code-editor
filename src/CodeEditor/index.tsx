@@ -7,10 +7,12 @@ type CodeEditor = {
     programError: ProgramError;
 }
 
-export default ({program, setProgram, programError}: CodeEditor) => (
+const CodeEditor = ({program, setProgram, programError}: CodeEditor) => (
     <CodeEditorView
         program={program}
         setProgram={setProgram}
         programError={programError}
     />
 );
+
+export default CodeEditor;

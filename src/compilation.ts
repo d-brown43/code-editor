@@ -12,8 +12,6 @@ export const prepareWindow = (globalReplacements: GlobalReplacements = {}) => {
     (window as any)[WINDOW_PROPERTY_NAME] = globalReplacements;
 };
 
-
-
 const replaceGlobal = (ast: File, globalReplacements: GlobalReplacements = {}) => {
     const visitor = {
         MemberExpression: (path: NodePath<MemberExpression>) => {

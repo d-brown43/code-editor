@@ -2,18 +2,12 @@ import * as React from "react";
 import styles from './CodeEditor.module.scss';
 import useTextAreaFocus from './useFocus';
 import LineNumbers from "./LineNumbers";
-import getCaretCoordinates from 'textarea-caret';
+import useSyntaxErrorPosition from "./useSyntaxErrorPosition";
 
 type CodeEditorView = {
     program: string;
     setProgram: (program: string, callback?: (program: string) => void) => void;
     programError: ProgramError;
-}
-
-type ErrorState = {
-    x: number;
-    y: number;
-    error: null | string;
 }
 
 export default React.memo(({program, setProgram, programError}: CodeEditorView) => {
@@ -24,30 +18,8 @@ export default React.memo(({program, setProgram, programError}: CodeEditorView) 
         error: null
     });
 
-    React.useEffect(() => {
-        if (programError && (textArea.current !== null)) {
-            const offset = program.split('\n')
-                .filter((ele, index) => index < programError.location.line - 1)
-                .reduce((result, line) => (result + 1 + line.length), 0) + programError.location.column;
-
-            const {top, left} = getCaretCoordinates(textArea.current, offset);
-
-            setError({
-                x: left,
-                y: top,
-                error: programError.message
-            })
-        } else if (!programError) {
-            setError({
-                x: 0,
-                y: 0,
-                error: null
-            });
-        }
-    }, [program, programError]);
-
-
     useTextAreaFocus(textArea);
+    useSyntaxErrorPosition(programError, textArea, program, setError);
 
     return (
         <div className={styles.container}>

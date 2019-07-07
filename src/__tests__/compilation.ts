@@ -1,4 +1,4 @@
-import {prepareWindow, run} from "../compilation";
+import {compileForErrors, prepareWindow, run} from "../compilation";
 
 describe('run', () => {
     it('can run', () => {
@@ -79,5 +79,21 @@ describe('run', () => {
         run(program, replacements);
 
         expect(replacements.console.log).toHaveBeenCalledWith('Hi');
+    });
+});
+
+describe('compileForErrors', () => {
+    it(`returns false when there's no syntax errors`, () => {
+        const program = `
+            console.log('Hello');
+        `;
+        expect(compileForErrors(program)).toEqual(false);
+    });
+
+    it(`returns a ProgramError when there's a syntax error`, () => {
+        const program = `console.log('This doesn't work`;
+        expect(compileForErrors(program)).not.toEqual(false);
+        expect(compileForErrors(program)).toHaveProperty('location');
+        expect(compileForErrors(program)).toHaveProperty('message');
     });
 });

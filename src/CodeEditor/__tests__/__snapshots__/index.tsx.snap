@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<Memo()
+  program="console.log('Hello world');"
+  programError={false}
+  setProgram={[MockFunction]}
+/>
+`;

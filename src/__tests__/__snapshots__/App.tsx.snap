@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div
+  className="container"
+>
+  <Controls
+    run={[Function]}
+  />
+  <CodeEditor
+    key="index"
+    program="console.log('Hello World');
+
+
+"
+    setProgram={[Function]}
+  />
+  <ConsoleLog
+    logMessages={Array []}
+  />
+</div>
+`;
