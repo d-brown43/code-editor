@@ -48,7 +48,7 @@ const App = () => {
                     try {
                         run(programs.index, programReplacements);
                     } catch (e) {
-                        console.error(e);
+                        addLogMessage('error')(e.message.replace(/__codeEditor__\./g, ''));
                     }
                 }}
             />
