@@ -62,7 +62,7 @@ export const compileForErrors = (program: string): ProgramError => {
     }
 };
 
-export const run = (program: string, globalReplacements?: GlobalReplacements) => {
+export const run = (program: string, globalReplacements?: GlobalReplacements): ProgramOutput => {
     const ast = parse(program);
 
     const astReplaced = replaceGlobal(ast, globalReplacements);
@@ -71,7 +71,17 @@ export const run = (program: string, globalReplacements?: GlobalReplacements) =>
     });
 
     if (finalProgram) {
-        // eslint-disable-next-line no-eval
-        eval(finalProgram.code as string);
+        const windowGlobal = {};
+        // eslint-disable-next-line no-new-func
+        const fnProgram = new Function('window', 'global', finalProgram.code as string);
+        fnProgram(windowGlobal, windowGlobal);
+        return {
+            window: windowGlobal,
+            global: windowGlobal
+        };
     }
+    return {
+        window: null,
+        global: null
+    };
 };

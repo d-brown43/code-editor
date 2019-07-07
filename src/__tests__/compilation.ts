@@ -97,3 +97,23 @@ describe('compileForErrors', () => {
         expect(compileForErrors(program)).toHaveProperty('message');
     });
 });
+
+describe('sandboxing', () => {
+    it(`doesn't let scripts define variables in the global window`, () => {
+        const program = `
+            window.someNewVariable = 10;
+        `;
+        run(program);
+        // @ts-ignore
+        expect(window.someNewVariable).not.toBeDefined();
+    });
+
+    it('uses the same reference for global and window', () => {
+        const program = `
+            window.someNewVariable = 10;
+        `;
+        const {window, global} = run(program);
+        expect(window.someNewVariable).toEqual(10);
+        expect(global.someNewVariable).toEqual(10);
+    });
+});
