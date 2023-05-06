@@ -17,7 +17,7 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-resize-detector": "^4.2.0",
-        "react-scripts": "3.0.1",
+        "react-scripts": "5.0.1",
         "reset-css": "^4.0.1",
         "textarea-caret": "^3.1.0",
         "typeface-inconsolata": "0.0.72",
